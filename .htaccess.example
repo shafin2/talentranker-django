@@ -1,0 +1,105 @@
+# .htaccess Configuration for TalentRanker Django Backend on cPanel
+# Place this file in your subdomain's root directory (e.g., /home/username/api.yourdomain.com/)
+
+# ============================================================================
+# IMPORTANT: Update all paths with YOUR actual cPanel username and paths!
+# cPanel Username: ilmoirfa
+# Subdomain: talentrankerapi.ilmoirfan.ai
+# Project Path: /home/ilmoirfa/talentrankerapi.ilmoirfan.ai
+# ============================================================================
+
+# Force HTTPS (SSL) - Redirect all HTTP to HTTPS
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ============================================================================
+# Passenger (WSGI) Configuration
+# ============================================================================
+PassengerEnabled On
+PassengerAppRoot /home/ilmoirfa/talentrankerapi.ilmoirfan.ai
+
+# Set Python version (Passenger will use the one from Setup Python App)
+PassengerPython /home/ilmoirfa/virtualenv/talentrankerapi_ilmoirfan_ai/3.9/bin/python
+
+# ============================================================================
+# Static and Media Files
+# ============================================================================
+# Serve static files directly (faster than going through Django)
+RewriteCond %{REQUEST_URI} ^/static/
+RewriteRule ^static/(.*)$ /home/ilmoirfa/talentrankerapi.ilmoirfan.ai/staticfiles/$1 [L]
+
+# Serve media/upload files directly
+RewriteCond %{REQUEST_URI} ^/media/
+RewriteRule ^media/(.*)$ /home/ilmoirfa/talentrankerapi.ilmoirfan.ai/uploads/$1 [L]
+
+# ============================================================================
+# Django Application
+# ============================================================================
+# Route all other requests to Django (passenger_wsgi.py)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ passenger_wsgi.py [QSA,L]
+
+# ============================================================================
+# Security Headers
+# ============================================================================
+<IfModule mod_headers.c>
+    # Prevent clickjacking
+    Header always set X-Frame-Options "SAMEORIGIN"
+    
+    # Prevent MIME type sniffing
+    Header always set X-Content-Type-Options "nosniff"
+    
+    # Enable XSS protection
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Referrer policy
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# ============================================================================
+# File Access Restrictions
+# ============================================================================
+# Prevent access to .env files
+<FilesMatch "^\.env">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Prevent access to Python bytecode files
+<FilesMatch "\.pyc$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Prevent directory listing
+Options -Indexes
+
+# ============================================================================
+# File Upload Limits
+# ============================================================================
+# Increase upload size limit for PDF files (10MB)
+php_value upload_max_filesize 10M
+php_value post_max_size 10M
+
+# ============================================================================
+# Compression (Optional - for better performance)
+# ============================================================================
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/json application/javascript
+</IfModule>
+
+# ============================================================================
+# Cache Control (Optional - for static files)
+# ============================================================================
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Cache static files for 1 year
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+</IfModule>

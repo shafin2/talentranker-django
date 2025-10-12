@@ -1,0 +1,27 @@
+# Core Django
+Django==4.2.7
+djangorestframework==3.14.0
+
+# CORS Support
+django-cors-headers==4.3.1
+
+# JWT Authentication
+djangorestframework-simplejwt==5.3.0
+
+# Password Hashing
+bcrypt==4.1.2
+
+# PDF Processing
+PyPDF2==3.0.1
+
+# HTTP Client for ML API
+requests==2.31.0
+
+# Environment Variables
+python-dotenv==1.0.0
+
+# Google OAuth
+google-auth==2.25.2
+google-auth-oauthlib==1.2.0
+google-auth-httplib2==0.2.0
+

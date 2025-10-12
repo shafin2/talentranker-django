@@ -1,0 +1,132 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+virtualenv/
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+/staticfiles/
+/static/
+/media/
+
+# Environment Variables - CRITICAL: Never commit these!
+.env
+.env.*
+.env.production
+.env.local
+.env.development
+.env.test
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Uploads - User uploaded files
+uploads/*
+!uploads/temp/
+uploads/temp/*
+!uploads/temp/.gitkeep
+
+# Coverage
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath
+*.sage.py
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmyp.json
+
+# Node modules (if any)
+node_modules/
+
+# Test files
+test_*.py
+*_test.py
+
+# Backup files
+*.bak
+*.backup
+*.sql
+*.dump
+
+# OS Files
+Thumbs.db
+.Spotlight-V100
+.Trashes
+
+# cPanel specific
+.htaccess
+passenger_wsgi.py
+.cpanel.yml
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Logs directory
+logs/
+*.log.*
+dmypy.json
